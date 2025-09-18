@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/features/splash_screen/splash_screen.dart';
+import 'package:movies_app/core/navigation/app_router.dart';
+import 'package:movies_app/core/navigation/app_router_config.dart';
 
 void main() {
   runApp(const MoviesApp());
@@ -19,7 +20,8 @@ class MoviesApp extends StatelessWidget {
         useMaterial3: true,
       ),
       darkTheme: ThemeData.dark(useMaterial3: true),
-      home: SplashScreen(),
+      onGenerateRoute: AppRouterConfig.onGenerateRoute,
+      initialRoute: AppRouter.splashScreen,
     );
   }
 }

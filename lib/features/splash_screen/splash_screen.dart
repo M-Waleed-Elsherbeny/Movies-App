@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/assets/app_assets.dart';
+import 'package:movies_app/core/navigation/app_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,16 +12,32 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   // add animation
-  AnimationController? animationController;
-  TweenAnimationBuilder? tweenAnimationBuilder;
+  late AnimationController animationController;
+  late Animation<double> animation;
   @override
   void initState() {
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
+    )..repeat(reverse: true);
+    animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.fastOutSlowIn,
     );
-    animationController!.reverse();
+    navigationToMainScreen();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  navigationToMainScreen() async {
+    await Future.delayed(Duration(seconds: 5));
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, AppRouter.homeScreen);
   }
 
   @override
@@ -31,31 +48,13 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppAssets.netflixLogo),
-                  fit: BoxFit.contain,
-                ),
-              ),
+            ScaleTransition(
+              scale: animation,
+              child: Image.asset(AppAssets.netflixLogo),
             ),
-            AnimatedContainer(
-              
-              onEnd: () {
-                  // Navigator.pushReplacementNamed(context, '/home');
-              },
-              duration: const Duration(seconds: 5),
-              curve: Curves.fastOutSlowIn,
-              height: 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppAssets.netflixName),
-                  fit: BoxFit.contain,
-                ),
-              ),
+            ScaleTransition(
+              scale: animation,
+              child: Image.asset(AppAssets.netflixName),
             ),
           ],
         ),
