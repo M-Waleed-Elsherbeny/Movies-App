@@ -39,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
     if (!mounted) return;
     Navigator.pushReplacementNamed(context, AppRouter.homeScreen);
   }
+  
 
   @override
   Widget build(BuildContext context) {
