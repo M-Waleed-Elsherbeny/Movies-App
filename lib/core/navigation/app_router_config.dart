@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/navigation/app_router.dart';
-import 'package:movies_app/features/home/home_screen.dart';
+import 'package:movies_app/features/home/ui/home_screen.dart';
 import 'package:movies_app/features/splash_screen/splash_screen.dart';
 
 class AppRouterConfig {
