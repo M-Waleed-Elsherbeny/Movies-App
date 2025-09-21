@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/features/home/widgets/custom_background.dart';
+import 'package:movies_app/features/home/widgets/custom_drop_down.dart';
+import 'package:movies_app/features/home/widgets/custom_search_field.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: SizedBox(
@@ -46,39 +47,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     alignment: Alignment.center,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: TextField(
-                            onSubmitted: (value) {},
-                            controller: controller,
-                            style: TextStyle(color: Colors.white),
-                            cursorColor: Colors.white,
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Colors.white,
-                              ),
-                              border: InputBorder.none,
-                              hintText: 'Search...',
-                              alignLabelWithHint: true,
-                              focusColor: Colors.transparent,
-                              hintStyle: TextStyle(color: Colors.white),
-                              filled: true,
-                              fillColor: Colors.black54,
-                            ),
-                          ),
+                        CustomSearchField(
+                          controller: controller,
+                          deviceWidth: deviceWidth * 0.6,
                         ),
-                        DropdownMenu(
-                          // initialSelection: 'English',
-                          // label: Text("English"),
-                          dropdownMenuEntries: [],
-                          width: deviceWidth * 0.35,
-                          hintText: "Popular",
-                          trailingIcon: Icon(
-                            Icons.filter_list,
-                            color: Colors.white,
-                          ),
-                        ),
+                        CustomDropDown(),
                       ],
                     ),
                   ),
