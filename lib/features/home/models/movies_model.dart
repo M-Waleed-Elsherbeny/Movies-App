@@ -8,8 +8,6 @@ class MoviesModel {
     page: json["page"],
     results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
   );
-
-
 }
 
 class Result {

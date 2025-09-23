@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/di/get_it_config.dart';
 import 'package:movies_app/core/navigation/app_router.dart';
 import 'package:movies_app/core/navigation/app_router_config.dart';
+import 'package:movies_app/core/networking/dio_observer.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
+  setupGetIt();
   runApp(const MoviesApp());
 }
 
