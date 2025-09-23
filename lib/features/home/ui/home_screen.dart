@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/features/home/widgets/custom_background.dart';
 import 'package:movies_app/features/home/widgets/custom_drop_down.dart';
+import 'package:movies_app/features/home/widgets/custom_movies_details.dart';
 import 'package:movies_app/features/home/widgets/custom_search_field.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(
                     width: deviceWidth,
@@ -57,6 +58,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         CustomDropDown(),
                       ],
+                    ),
+                  ),
+                  SizedBox(height: deviceHeight * 0.05),
+                  SizedBox(
+                    height: deviceHeight * 0.8,
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return CustomMoviesDetails(
+                          deviceHeight: deviceHeight,
+                          deviceWidth: deviceWidth,
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const Divider(color: Colors.transparent),
+                      itemCount: 10,
                     ),
                   ),
                 ],
