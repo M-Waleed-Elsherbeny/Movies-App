@@ -19,7 +19,7 @@ class AppRouterConfig {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider(
-              create: (context) => getIt<HomeMoviesCubit>()..getMovies(),
+              create: (context) => getIt<HomeMoviesCubit>(),
               child: HomeScreen(),
             );
           },

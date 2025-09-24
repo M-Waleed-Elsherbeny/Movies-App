@@ -10,6 +10,7 @@ class ApiServices {
   Future<Response> getMovies({
     required String endPoint,
     Map<String, dynamic>? query,
+    required int page,
   }) async {
     try {
       final Response response = await dio!.get(
@@ -18,10 +19,11 @@ class ApiServices {
           "api_key": ApiConfig.apiKey,
           "language": "en-US",
           "sort_by": "popularity.desc",
+          "page": page,
         },
       );
       if (response.statusCode == 200) {
-        log("Success");
+        log("Success getMovies");
         return response;
       } else {
         throw Exception(response.statusMessage);

@@ -26,8 +26,8 @@ class MoviesApp extends StatelessWidget {
         useMaterial3: true,
       ),
       darkTheme: ThemeData.dark(useMaterial3: true),
-      initialRoute: AppRouter.splashScreen,
       onGenerateRoute: AppRouterConfig.onGenerateRoute,
+      initialRoute: AppRouter.splashScreen,
     );
   }
 }

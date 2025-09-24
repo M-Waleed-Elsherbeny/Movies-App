@@ -12,3 +12,5 @@ final class HomeError extends HomeMoviesState {
   final String errorMessage;
   HomeError(this.errorMessage);
 }
+
+final class DropDownChanged extends HomeMoviesState{}
