@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    homeCubit.getPopularMovies();
+    homeCubit.getAllMovies();
     super.initState();
   }
 
@@ -73,10 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }
                   if (state is DropDownChanged) {
-                    if(homeCubit.initialDropDown == SearchCategory.upcoming && homeCubit.upcomingMovies.isEmpty){
-                      homeCubit.getUpcomingMovies();
+                    if (homeCubit.initialDropDown == SearchCategory.upcoming &&
+                        homeCubit.upcomingMovies.isEmpty) {
+                      homeCubit.getAllMovies();
                     }
-                    
                   }
                 },
                 builder: (context, state) {
@@ -129,12 +129,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     deviceHeight: deviceHeight,
                                     deviceWidth: deviceWidth,
                                     index: index,
-                                    moviesModel: homeCubit.popularMovies,
+                                    moviesModel: homeCubit.allMovies,
                                   );
                                 },
                                 separatorBuilder: (context, index) =>
                                     const Divider(color: Colors.transparent),
-                                itemCount: homeCubit.popularMovies.length,
+                                itemCount: homeCubit.allMovies.length,
                               )
                             : Center(
                                 child: Text(

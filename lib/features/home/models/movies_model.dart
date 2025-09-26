@@ -12,7 +12,7 @@ class MoviesModel {
 
 class Result {
   bool adult;
-  String backdropPath;
+  String? backdropPath;
   List<int> genreIds;
   int id;
   String originalLanguage;
@@ -28,7 +28,7 @@ class Result {
 
   Result({
     required this.adult,
-    required this.backdropPath,
+    this.backdropPath,
     required this.genreIds,
     required this.id,
     required this.originalLanguage,
@@ -45,7 +45,7 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     adult: json["adult"],
-    backdropPath: json["backdrop_path"],
+    backdropPath: json["backdrop_path"] ?? "",
     genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
     id: json["id"],
     originalLanguage: json["original_language"],
