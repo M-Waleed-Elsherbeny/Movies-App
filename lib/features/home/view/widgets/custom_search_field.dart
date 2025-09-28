@@ -4,18 +4,18 @@ class CustomSearchField extends StatelessWidget {
   const CustomSearchField({
     super.key,
     required this.deviceWidth,
-    required this.controller, this.onSubmitted,
+    required this.controller, this.onChanged,
   });
   final double deviceWidth;
   final TextEditingController controller;
-  final void Function(String)? onSubmitted;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: deviceWidth,
       child: TextField(
-        onSubmitted: onSubmitted,
+        onChanged: onChanged,
         controller: controller,
         style: TextStyle(color: Colors.white),
         cursorColor: Colors.white,

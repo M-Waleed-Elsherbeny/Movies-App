@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/di/get_it_config.dart';
 import 'package:movies_app/features/home/logic/cubit/home_cubit.dart';
-import 'package:movies_app/features/home/models/search_category.dart';
 import 'package:movies_app/features/home/view/widgets/custom_background.dart';
 import 'package:movies_app/features/home/view/widgets/custom_drop_down.dart';
 import 'package:movies_app/features/home/view/widgets/custom_movies_details.dart';
@@ -19,9 +17,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late double deviceHeight, deviceWidth;
-  TextEditingController controller = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   HomeMoviesCubit homeCubit = getIt<HomeMoviesCubit>();
-
+  int currentIndex = 0;
   @override
   void initState() {
     homeCubit.getAllMovies();
@@ -44,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomBackground(
               deviceHeight: deviceHeight,
               deviceWidth: deviceWidth,
+              index: currentIndex,
             ),
             Positioned(
               top: deviceHeight * 0.08,
@@ -73,10 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }
                   if (state is DropDownChanged) {
-                    if (homeCubit.initialDropDown == SearchCategory.upcoming &&
-                        homeCubit.upcomingMovies.isEmpty) {
-                      homeCubit.getAllMovies();
-                    }
+                    homeCubit.getAllMovies();
                   }
                 },
                 builder: (context, state) {
@@ -100,11 +96,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CustomSearchField(
-                              controller: controller,
+                              controller: searchController,
                               deviceWidth: deviceWidth * 0.6,
-                              onSubmitted: (String? searchValue) {
+                              onChanged: (String? searchValue) {
+                                log("searchValue ==> $searchValue");
                                 homeCubit.searchMoviesByTitle(
-                                  searchQuery: searchValue!,
+                                  searchQuery: searchValue!.toLowerCase(),
                                 );
                               },
                             ),
@@ -129,12 +126,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                     deviceHeight: deviceHeight,
                                     deviceWidth: deviceWidth,
                                     index: index,
-                                    moviesModel: homeCubit.allMovies,
+                                    onTap: () {
+                                      currentIndex = index;
+                                      setState(() {});
+                                    },
+                                    moviesModel:
+                                        searchController.text.isNotEmpty
+                                        ? homeCubit.searchMovies
+                                        : homeCubit.allMovies,
                                   );
                                 },
                                 separatorBuilder: (context, index) =>
                                     const Divider(color: Colors.transparent),
-                                itemCount: homeCubit.allMovies.length,
+                                itemCount: searchController.text.isNotEmpty
+                                    ? homeCubit.searchMovies.length
+                                    : homeCubit.allMovies.length,
                               )
                             : Center(
                                 child: Text(

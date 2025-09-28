@@ -9,70 +9,80 @@ class CustomMoviesDetails extends StatelessWidget {
     required this.deviceWidth,
     required this.moviesModel,
     required this.index,
+    this.onTap,
   });
   final double deviceHeight, deviceWidth;
   final List<Result> moviesModel;
   final int index;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadiusGeometry.circular(10),
-          child: Image.network(
-            "${ApiConfig.baseApiImage}${moviesModel[index].posterPath}", height: deviceHeight * 0.20),
-        ),
-        SizedBox(width: deviceWidth * 0.02),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                moviesModel[index].title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: deviceHeight * 0.03,
-                  overflow: TextOverflow.ellipsis,
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadiusGeometry.circular(10),
+            child: Image.network(
+              "${ApiConfig.baseApiImage}${moviesModel[index].posterPath}",
+              height: deviceHeight * 0.20,
+            ),
+          ),
+          SizedBox(width: deviceWidth * 0.02),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  moviesModel[index].title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: deviceHeight * 0.03,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              Text(
-                "${moviesModel[index].originalLanguage.toUpperCase()} | ${moviesModel[index].releaseDate.toString().split(" ")[0]}",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: deviceHeight * 0.015,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              SizedBox(height: deviceHeight * 0.01),
-              SizedBox(
-                width: deviceHeight,
-                height: deviceHeight * 0.12,
-                // color: Colors.red,
-                child: Text(
-                  moviesModel[index].overview,
+                Text(
+                  "${moviesModel[index].originalLanguage.toUpperCase()} | ${moviesModel[index].releaseDate.toString().split(" ")[0]}",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: deviceHeight * 0.015,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 5,
                 ),
-              ),
-            ],
+                SizedBox(height: deviceHeight * 0.01),
+                SizedBox(
+                  width: deviceHeight,
+                  height: deviceHeight * 0.12,
+                  // color: Colors.red,
+                  child: Text(
+                    moviesModel[index].overview,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: deviceHeight * 0.015,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 5,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
 
-        Text(
-          moviesModel[index].voteAverage.toStringAsFixed(2),
-          style: TextStyle(color: Colors.white, fontSize: deviceHeight * 0.03),
-        ),
-      ],
+          Text(
+            moviesModel[index].voteAverage.toStringAsFixed(2),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: deviceHeight * 0.03,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
