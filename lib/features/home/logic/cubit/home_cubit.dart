@@ -37,18 +37,21 @@ class HomeMoviesCubit extends Cubit<HomeMoviesState> {
           popularMovies.clear();
           popularMovies.addAll(moviesModel.results);
           allMovies = popularMovies;
-          log(allMovies.length.toString());
+          log("popularMovies ==> ${allMovies.length}");
+          emit(HomeSuccess());
           return allMovies;
         } else if (initialDropDown == SearchCategory.upcoming) {
           upcomingMovies.clear();
           upcomingMovies.addAll(moviesModel.results);
           allMovies = upcomingMovies;
-          log(allMovies.length.toString());
+          log("upcomingMovies ==> ${allMovies.length}");
+          emit(HomeSuccess());
           return allMovies;
         } else {
           allMovies.clear();
           allMovies.addAll(moviesModel.results);
-          log(allMovies.length.toString());
+          log("allMovies ==> ${allMovies.length}");
+          emit(HomeSuccess());
           return allMovies;
         }
       }
@@ -64,33 +67,15 @@ class HomeMoviesCubit extends Cubit<HomeMoviesState> {
       return [];
     }
   }
-
-  // Future<void> getUpcomingMovies() async {
-  //   emit(HomeLoading());
-  //   try {
-  //     Response response = await apiServices.getMovies(
-  //       endPoint: "/movie/${initialDropDown.toLowerCase()}",
-  //     );
-  //     if (response.statusCode == 200) {
-  //       MoviesModel moviesModel = MoviesModel.fromJson(response.data);
-  //       upcomingMovies.clear();
-  //       upcomingMovies.addAll(moviesModel.results);
-  //       log(upcomingMovies.length.toString());
-  //       emit(HomeSuccess());
-  //     }
-  //   } on DioException catch (e) {
-  //     log(e.message.toString());
-  //     emit(HomeError(e.toString()));
-  //   }
-  // }
-
   List<Result> searchMovies = [];
   List<Result> searchMoviesByTitle({required String searchQuery}) {
+    searchMovies.clear();
     searchMovies.addAll(
-      allMovies.where((query) => query.title.contains(searchQuery)),
+      allMovies.where((query) => query.title.toLowerCase().contains(searchQuery)),
     );
-    log(searchMovies.length.toString());
+    log("searchMovies ==> ${searchMovies.length}");
     if (searchMovies.isNotEmpty) {
+      emit(HomeSuccess());
       return searchMovies;
     } else {
       return allMovies;
